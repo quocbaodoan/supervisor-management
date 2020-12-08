@@ -36,6 +36,7 @@ while True:
     FileProcess.supervisorInRoom()
     FileProcess.supervisorOutRoom()
     FileProcess.writeToExcel(fileOutput)
+    FileProcess.connectToDatabase()
 
     with open(fileOutput, "rb") as file:
         data = file.read(1024)
@@ -54,7 +55,6 @@ while True:
         break
 
 
-sock.shutdown()
 sock.close()
 
 

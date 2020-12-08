@@ -142,3 +142,33 @@ def writeToExcel(filename):
 		sheet2.write(i + 1, 4, pinfo["pt"])
 
 	wb.save(filename)
+
+
+def connectToDatabase():	
+	mydb = mysql.connector.connect(user='root', password='admin',
+								host='127.0.0.1',
+								database='quanlygiamthi')
+
+	mycursor1= mydb.cursor()
+	mycursor1.execute("TRUNCATE TABLE giamthiphongthi")
+	mydb.commit()
+
+	mycursor2= mydb.cursor()
+	mycursor2.execute("TRUNCATE TABLE giamthihanhlang")
+	mydb.commit()
+
+	mycursor3 = mydb.cursor()
+	for i in range(0, len(list_supervisor_in_room)):
+		pinfo = list_supervisor_in_room[i]
+		sql = "INSERT INTO giamthiphongthi (phongthi, magiamthi1, giamthi1, donvicongtac1, magiamthi2, giamthi2, donvicongtac2) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+		val = (pinfo["pt"], pinfo["mgv1"], pinfo["tgv1"], pinfo["dvct1"], pinfo["mgv2"], pinfo["tgv2"], pinfo["dvct2"])
+		mycursor3.execute(sql, val)
+	mydb.commit()
+
+	mycursor4 = mydb.cursor()
+	for i in range(0, len(list_supervisor_out_room)):
+		pinfo = list_supervisor_out_room[i]
+		sql = "INSERT INTO giamthihanhlang (magiamthi, giamthi, donvicongtac, phongthi) VALUES (%s, %s, %s, %s)"
+		val = (pinfo["mgv"], pinfo["tgv"], pinfo["dvct"], pinfo["pt"])
+		mycursor4.execute(sql, val)
+	mydb.commit()
