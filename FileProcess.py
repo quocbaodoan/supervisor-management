@@ -55,7 +55,6 @@ def supervisorInRoom():
 
 def supervisorOutRoom():
 	equal_room_per_outside_supervisor = len(list_room)/len(list_supervisor)
-	#print(equal_room_per_outside_supervisor)
 	if (equal_room_per_outside_supervisor <= 2):
 		for i in range(0, len(list_room), 2):
 			gv = list_supervisor[random.randint(0, len(list_supervisor) - 1)]
@@ -88,7 +87,6 @@ def supervisorOutRoom():
 					list_supervisor.remove(supervisor)
 					break
 			list_supervisor_out_room.append(pinfo)
-
 		gv = list_supervisor[0]
 		pinfo = dict(mgv = gv["mgv"], tgv = gv["tgv"], dvct = gv["dvct"])
 		count = len(list_room) - len(list_supervisor_out_room) * int(equal_room_per_outside_supervisor)
@@ -100,8 +98,6 @@ def supervisorOutRoom():
 			i += 1
 		pinfo.update(pt = str(total_room))
 		list_supervisor_out_room.append(pinfo)
-
-	#print(list_supervisor_out_room)
 
 
 def writeToExcel(filename):
@@ -160,7 +156,8 @@ def connectToDatabase():
 	mycursor3 = mydb.cursor()
 	for i in range(0, len(list_supervisor_in_room)):
 		pinfo = list_supervisor_in_room[i]
-		sql = "INSERT INTO giamthiphongthi (phongthi, magiamthi1, giamthi1, donvicongtac1, magiamthi2, giamthi2, donvicongtac2) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+		sql = '''INSERT INTO giamthiphongthi (phongthi, magiamthi1, giamthi1, donvicongtac1, magiamthi2, giamthi2, donvicongtac2) 
+				VALUES (%s, %s, %s, %s, %s, %s, %s)'''
 		val = (pinfo["pt"], pinfo["mgv1"], pinfo["tgv1"], pinfo["dvct1"], pinfo["mgv2"], pinfo["tgv2"], pinfo["dvct2"])
 		mycursor3.execute(sql, val)
 	mydb.commit()

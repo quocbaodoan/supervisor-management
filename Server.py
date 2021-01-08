@@ -6,11 +6,12 @@ fileInput = "server/File Receive.xlsx"
 fileOutput = "server/File Giám thị.xls"
 
 port = 1218
-sock = socket.socket()
-host = socket.gethostname()
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = "192.168.0.101"
 sock.bind((host, port))
-sock.listen(10)
+sock.listen()
 print("File Server started...")
+print(f"[LISTENING] Server is listening on {host}")
 
 while True:
     conn, addr = sock.accept()
@@ -50,12 +51,9 @@ while True:
             data = file.read(1024)
     print("File send")
 
-    conn.close
-    if (ONE_CONNECTION_ONLY):
-        break
+    conn.close()
 
 
-sock.close()
 
 
 #while True:
