@@ -6,14 +6,15 @@ fileInput = ""
 root = tkinter.Tk()
 root.title("Supervisor Management")
 
+
 def addApp():
     fileInput = filedialog.askopenfilename(initialdir="/", title="Select File",
-                                            filetypes=(("excel", "*.xlsx"), ("all files", "*.*")))
+                                           filetypes=(("excel", "*.xlsx"), ("all files", "*.*")))
 
     print(fileInput)
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = "192.168.0.101"
+    host = "192.168.16.1"
     port = 1218
     sock.connect((host, port))
 
@@ -28,10 +29,10 @@ def addApp():
     sock.close()
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = "192.168.0.101"
+    host = "192.168.16.1"
     port = 1218
     sock.connect((host, port))
-    file = filedialog.asksaveasfile(mode='wb', defaultextension=".xlsx")
+    file = filedialog.asksaveasfile(mode='wb', defaultextension=".xls")
     while True:
         data = sock.recv(1024)
         # print(f"data={data}")
@@ -44,12 +45,12 @@ def addApp():
     sock.close()
     print("Connection is closed")
 
+
 canvas = tkinter.Canvas(root, height=240, width=300, bg="#263D42")
 canvas.pack()
 
 openFile = tkinter.Button(root, text="Open File", padx=10,
-                            pady=5, fg="white", bg="#263D42", command=addApp)
+                          pady=5, fg="white", bg="#263D42", command=addApp)
 openFile.pack()
 
 root.mainloop()
-
